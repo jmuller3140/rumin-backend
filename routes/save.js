@@ -9,7 +9,7 @@ const Entry = require('../models/entry');
 const checkAuth = require('../middleware/check-auth');
 
 
-require('dotenv/config');
+require('dotenv').config('./.env');
 
 // create application/json parser
 var jsonParser = bodyParser.json()
@@ -25,11 +25,11 @@ router.post(process.env.URL_SAVE, checkAuth, (req, res, next) => {
 	    return res.sendStatus(400);
   }
 
-
+  console.log(moment());
   const entry = new Entry({
   	_id: mongoose.Types.ObjectId(),
     userId: req.userData.userId,
-  	date: moment(),
+  	date: req.body.date,
   	entry: req.body.data
   });
   entry.save().then(result => {
@@ -39,7 +39,7 @@ router.post(process.env.URL_SAVE, checkAuth, (req, res, next) => {
   .catch(err => console.log(err));
 
 	console.log(req.body);
-	
+
 });
 
 

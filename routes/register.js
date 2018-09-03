@@ -6,7 +6,7 @@ var randtoken = require('rand-token');
 var mongoose = require('mongoose');
 var moment = require('moment');
 var bcrypt = require('bcrypt');
-require('dotenv/config');
+require('dotenv').config('./.env');
 
 const User = require('../models/user');
 
@@ -15,6 +15,26 @@ const User = require('../models/user');
 
 
 router.post(process.env.URL_REGISTER, function(req, res){
+
+// var table = "user";
+// var params = {
+//     TableName:table,
+//     Key:{
+//         "email": req.body.email,
+//         }
+// };
+
+//   console.log("Fetching user...");
+//  docClient.get(params, function(err, data){
+//  	if()
+//  })
+// docClient.put(params, function(err, data){
+// 	if (err) {
+//         console.error("Unable to add item. Error JSON:", JSON.stringify(err, null, 2));
+//     } else {
+//         console.log("Added item:", JSON.stringify(data, null, 2));
+//     }
+// })
 
 User.find({email: req.body.email})
 .exec()

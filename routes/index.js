@@ -4,7 +4,7 @@ var app = express();
 var jwt = require('jsonwebtoken');
 var moment = require('moment');
 var mongoose = require('mongoose');
-require('dotenv/config');
+require('dotenv').config('./.env');
 
 const Entry = require('../models/entry');
 const checkAuth = require('../middleware/check-auth');
@@ -13,20 +13,6 @@ const checkAuth = require('../middleware/check-auth');
 /* GET home page. */
 router.get(process.env.URL_HOME, checkAuth, (req, res, next) => {
 
-    getDate = (dateString) => {
-       const monthNames = ["January", "February", "March", "April", "May", "June",
-        "July", "August", "September", "October", "November", "December"];
-
-        const dateArray = dateString.split(" ");
-        const date = dateArray[0].split("/");
-        const year = date[0];
-        const day = date[2];
-        const month = monthNames[parseInt(date[1])-1];
-        const entryDateString = (month + " " + day + " " + year);
-
-    return entryDateString;
-  }
-  
    // Entry.remove({}).exec();
    // console.log("success in deletion");
   Entry.find({userId: req.userData.userId})
@@ -35,11 +21,7 @@ router.get(process.env.URL_HOME, checkAuth, (req, res, next) => {
         console.log(entries);
         const data = [];
         for(var i=0; i< entries.length; i++){
-          const timestamp = moment(entries[i].date).format('YYYY/MM/DD hh:mm:ss SSS');
-
-          const dateString = getDate(timestamp);
-          data.push({dateTime: timestamp, dateString: dateString, id: entries[i]._id, entry: entries[i].entry});
-          console.log(entries[i]._id);
+          data.push({timestamp: entries[i].date, id: entries[i]._id, entry: entries[i].entry});
         }
         data.reverse();
         res.status(200).json(data);
