@@ -72,12 +72,6 @@ module.exports = router;
 
 
 
-// let awsConfig = {
-//   "region": "us-east-2",
-//   "endpoint": "http://dynamodb.us-east-2.amazonaws.com",
-//   "accessKeyId":"AKIAJ4WNQZ3O62TCLFTA",
-//   "secretAccessKey": "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"
-// }
 
 // AWS.config.update(awsConfig);
 
